@@ -1,0 +1,168 @@
+[gd_scene load_steps=17 format=3 uid="uid://dqwkr3kidr0lu"]
+
+[ext_resource type="Script" path="res://Game.gd" id="1_dh1n3"]
+[ext_resource type="Script" path="res://PlayerCode.gd" id="1_wje8h"]
+[ext_resource type="Texture2D" uid="uid://ccqp1sfalv75r" path="res://Assets/PongPlayer.png" id="1_xrss6"]
+[ext_resource type="Texture2D" uid="uid://b38wetdsnryqk" path="res://Assets/PongEnemy.png" id="3_apf8f"]
+[ext_resource type="Script" path="res://EnemyAI.gd" id="3_y3sa1"]
+[ext_resource type="Script" path="res://BallCode.gd" id="4_cin4d"]
+[ext_resource type="Texture2D" uid="uid://da8vfnsyc6kr0" path="res://Assets/PongBall.png" id="4_jrqpw"]
+[ext_resource type="AudioStream" uid="uid://ni1now2wu83e" path="res://Assets/F4J5TCX-ball-hits-ball.mp3" id="8_keb55"]
+[ext_resource type="AudioStream" uid="uid://c1ybark44pjoc" path="res://Assets/a-long-way-166385.mp3" id="9_8lyll"]
+[ext_resource type="AudioStream" uid="uid://761xvipl5x2e" path="res://Assets/short-success-sound-glockenspiel-treasure-video-game-6346.mp3" id="10_pnyn7"]
+[ext_resource type="FontFile" uid="uid://v03u7fpvhu8k" path="res://Assets/Futura Extra Black font.ttf" id="11_wleme"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p6ree"]
+size = Vector2(20, 127)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tp83u"]
+size = Vector2(20, 126)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_32vmt"]
+size = Vector2(1143, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f450c"]
+size = Vector2(20, 126)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xmqun"]
+radius = 19.57
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_dh1n3")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(46, 266)
+script = ExtResource("1_wje8h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 53.5)
+shape = SubResource("RectangleShape2D_p6ree")
+debug_color = Color(0.85098, 0.278431, 0.627451, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player/CollisionShape2D"]
+scale = Vector2(0.273333, 0.384375)
+texture = ExtResource("1_xrss6")
+
+[node name="Area2D" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
+position = Vector2(0, 53)
+shape = SubResource("RectangleShape2D_tp83u")
+
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2(0, -30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+position = Vector2(579.5, 64)
+shape = SubResource("RectangleShape2D_32vmt")
+
+[node name="Wall2" type="StaticBody2D" parent="."]
+position = Vector2(1, 580)
+scale = Vector2(1, 0.833)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+position = Vector2(576.5, 19)
+shape = SubResource("RectangleShape2D_32vmt")
+
+[node name="PlayerWall" type="Area2D" parent="."]
+position = Vector2(16, -237)
+rotation = 1.57293
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerWall"]
+position = Vector2(581, 19)
+shape = SubResource("RectangleShape2D_32vmt")
+
+[node name="EnemyWall" type="Area2D" parent="."]
+position = Vector2(1178, -147)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyWall"]
+position = Vector2(581, 19)
+shape = SubResource("RectangleShape2D_32vmt")
+
+[node name="Enemy" type="CharacterBody2D" parent="."]
+position = Vector2(1111, 266)
+script = ExtResource("3_y3sa1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+position = Vector2(0, 53.5)
+shape = SubResource("RectangleShape2D_p6ree")
+debug_color = Color(0.85098, 0.278431, 0.627451, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy/CollisionShape2D"]
+scale = Vector2(0.273333, 0.384375)
+texture = ExtResource("3_apf8f")
+
+[node name="Area2D" type="Area2D" parent="Enemy"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy/Area2D"]
+position = Vector2(0, 53)
+shape = SubResource("RectangleShape2D_f450c")
+
+[node name="Ball" type="CharacterBody2D" parent="."]
+position = Vector2(571, 322)
+script = ExtResource("4_cin4d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_xmqun")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball/CollisionShape2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_jrqpw")
+
+[node name="BallHit" type="AudioStreamPlayer2D" parent="Ball"]
+stream = ExtResource("8_keb55")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+z_as_relative = false
+offset_left = 92.0
+offset_top = 72.0
+offset_right = 1069.0
+offset_bottom = 560.0
+color = Color(0, 0, 0, 1)
+
+[node name="Divider" type="ColorRect" parent="ColorRect"]
+z_index = -1
+z_as_relative = false
+layout_mode = 0
+offset_left = 473.0
+offset_top = -84.0
+offset_right = 486.0
+offset_bottom = 589.0
+
+[node name="GameMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_8lyll")
+autoplay = true
+
+[node name="Score" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_pnyn7")
+
+[node name="Rematch" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Player1Score" type="Label" parent="."]
+offset_left = 260.0
+offset_top = 289.0
+offset_right = 459.0
+offset_bottom = 443.0
+theme_override_fonts/font = ExtResource("11_wleme")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+
+[node name="Player2Score" type="Label" parent="."]
+offset_left = 720.0
+offset_top = 292.0
+offset_right = 852.0
+offset_bottom = 389.0
+theme_override_fonts/font = ExtResource("11_wleme")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+
+[connection signal="area_entered" from="Player/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_entered" from="Player/Area2D" to="Player" method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Player/Area2D" to="Player" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="PlayerWall" to="." method="_on_player_wall_body_entered"]
+[connection signal="body_entered" from="EnemyWall" to="." method="_on_enemy_wall_body_entered"]
+[connection signal="body_entered" from="Enemy/Area2D" to="Enemy" method="_on_area_2d_body_entered"]

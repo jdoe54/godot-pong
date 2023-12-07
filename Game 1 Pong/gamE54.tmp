@@ -1,0 +1,89 @@
+[gd_scene load_steps=9 format=3 uid="uid://dqwkr3kidr0lu"]
+
+[ext_resource type="Script" path="res://PlayerCode.gd" id="1_wje8h"]
+[ext_resource type="Texture2D" uid="uid://ccqp1sfalv75r" path="res://Assets/PongPlayer.png" id="1_xrss6"]
+[ext_resource type="Texture2D" uid="uid://b38wetdsnryqk" path="res://Assets/PongEnemy.png" id="3_apf8f"]
+[ext_resource type="Script" path="res://BallCode.gd" id="4_cin4d"]
+[ext_resource type="Texture2D" uid="uid://da8vfnsyc6kr0" path="res://Assets/PongBall.png" id="4_jrqpw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p6ree"]
+size = Vector2(20, 127)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_32vmt"]
+size = Vector2(1142, 20)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xmqun"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(46, 266)
+script = ExtResource("1_wje8h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0, 53.5)
+shape = SubResource("RectangleShape2D_p6ree")
+debug_color = Color(0.85098, 0.278431, 0.627451, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player/CollisionShape2D"]
+scale = Vector2(0.273333, 0.384375)
+texture = ExtResource("1_xrss6")
+
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2(0, -30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+position = Vector2(581, 19)
+shape = SubResource("RectangleShape2D_32vmt")
+
+[node name="Wall2" type="StaticBody2D" parent="."]
+position = Vector2(0, 605)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+position = Vector2(581, 19)
+shape = SubResource("RectangleShape2D_32vmt")
+
+[node name="PlayerWall" type="StaticBody2D" parent="."]
+position = Vector2(16, -237)
+rotation = 1.57293
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerWall"]
+position = Vector2(581, 19)
+shape = SubResource("RectangleShape2D_32vmt")
+
+[node name="EnemyWall" type="StaticBody2D" parent="."]
+position = Vector2(1178, -147)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyWall"]
+position = Vector2(581, 19)
+shape = SubResource("RectangleShape2D_32vmt")
+
+[node name="Enemy" type="CharacterBody2D" parent="."]
+position = Vector2(1111, 266)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+position = Vector2(0, 53.5)
+shape = SubResource("RectangleShape2D_p6ree")
+debug_color = Color(0.85098, 0.278431, 0.627451, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy/CollisionShape2D"]
+scale = Vector2(0.273333, 0.384375)
+texture = ExtResource("3_apf8f")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -1
+offset_right = 1152.0
+offset_bottom = 617.0
+color = Color(0.172549, 0.266667, 0.4, 1)
+
+[node name="Ball" type="CharacterBody2D" parent="."]
+script = ExtResource("4_cin4d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_xmqun")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball/CollisionShape2D"]
+position = Vector2(557, 310)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_jrqpw")
